@@ -4,6 +4,10 @@ public class StaticMethod {
 	int n;
 	static int m;
 	
+	// static 메소드에서는 this 사용 불가
+	// static 메소드내는 static 멤버만 접근할 수 있다.
+
+	
 	void f1() {
 		n = 10;
 	}
