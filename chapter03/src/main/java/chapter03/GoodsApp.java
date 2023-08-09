@@ -17,9 +17,11 @@ public class GoodsApp {
 		Goods goods3 = new Goods();
 		
 		System.out.println(Goods.countOfGoods);
+		camera.setPrice(500000);
 		
-		// 지역변수는 꼭 초기화 시켜주기 
-		System.out.println("상품이름 : " + camera.getName() + ", 가격 : " + camera.getPrice()
-				+ ", 재고개수 : " + camera.getCountStock() + ", 팔린 개수 : " + camera.getCountSold());
+		camera.showInfo();
+		int discountPrice = camera.calcDiscountPrice(0.5);
+		System.out.println(discountPrice);
 	}
+	
 }
