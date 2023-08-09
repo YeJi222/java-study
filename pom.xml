@@ -6,6 +6,9 @@
   <packaging>pom</packaging>
   <modules>
   	<module>chapter03</module>
+  	<module>prac01</module>
+  	<module>prac02</module>
+  	<module>prac03</module>
   </modules>
   
   <properties>
@@ -14,4 +17,5 @@
   	<maven.compiler.source>17</maven.compiler.source>
   	<maven.compiler.target>17</maven.compiler.target>
   </properties>
+  
 </project>
