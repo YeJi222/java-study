@@ -20,6 +20,7 @@ public class Point implements Drawable {
 		this.x = x;
 	}
 	public int getY() {
+		
 		return y;
 	}
 	public void setY(int y) {

@@ -6,8 +6,4 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>prac03</artifactId>
-  
-  <build>
-  	<finalName>prac03</finalName>
-  </build>
 </project>
