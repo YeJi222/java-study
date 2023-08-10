@@ -6,6 +6,10 @@ public class Person {
 	private String name;
 	
 	/* 코드 작성 */
+	public Person() { // Constructor 
+		this.name = "";
+		this.age = 12;
+	}
 	public Person(String name) { // Constructor 
 		this.name = name;
 		this.age = 12;
