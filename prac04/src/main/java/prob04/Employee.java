@@ -1,8 +1,8 @@
 package prob04;
 
 public class Employee {
-	private String name;
-	private int salary;
+	protected String name;
+	protected int salary;
 
 	public Employee() {
 	}
