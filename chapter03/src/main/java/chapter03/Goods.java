@@ -8,10 +8,19 @@ public class Goods {
 	private int countStock;
 	private int countSold;
 	
-	public Goods() {
+	public Goods() { // 기본 생성자 
+		// 초기화 코드 
 		// 내부에서는 클래스 이름 생략 가능 
 		// Goods.countOfGoods++;
 		countOfGoods++;
+	}
+	
+	public Goods(String name, int price, int countStock, int countSold) { // 생성자의 오버로딩(다형성)
+		// 초기화 코드 
+		this.name = name;
+		this.price = price;
+		this.countStock = countStock;
+		this.countSold = countSold;
 	}
 	
 	public String getName() {
