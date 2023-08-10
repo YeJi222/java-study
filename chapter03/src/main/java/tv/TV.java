@@ -40,7 +40,7 @@ public class TV {
 	
 	// (8) void volume( boolean up ) 메소드 오버로딩 (0 ~ 100 유지, 1씩 증감)
 	public void volume(boolean up) {
-		
+		this.volume = volume + 1; // 내 생각 
 	}
 	
 	// (9) void status() 메소드 구현( TV 정보 출력) 
