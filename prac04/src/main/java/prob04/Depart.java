@@ -3,6 +3,9 @@ package prob04;
 public class Depart extends Employee {
 	private String department;
 	
+	public Depart() {
+	}
+	
 	public Depart(String name, int salary, String department) {
 		this.name = name;
 		this.salary = salary;
