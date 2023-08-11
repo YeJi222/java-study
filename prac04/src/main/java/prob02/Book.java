@@ -6,6 +6,9 @@ public class Book {
 	private String author;
 	private int stateCode;
 	
+	public Book(){
+	}
+	
 	public Book(int bookNo, String title, String author) {
 		this.bookNo = bookNo;
 		this.title = title;
@@ -41,11 +44,8 @@ public class Book {
 		this.stateCode = 0;
 		System.out.println(title + "이(가) 대여 됐습니다.");
 	}
-	public static void print(Book[] books) {
-		for(int i = 0 ; i < books.length ; i++) {
-			System.out.println("책 제목:" + books[i].title + ", 작가:" + books[i].author
-					+ ", 대여 유무:" + ((books[i].stateCode == 1) ? "재고있음" : "대여중"));
-		}
-		
+	public void print() {
+		System.out.println("책 제목:" + title + ", 작가:" + author
+				+ ", 대여 유무:" + ((stateCode == 1) ? "재고있음" : "대여중"));
 	}
 }
