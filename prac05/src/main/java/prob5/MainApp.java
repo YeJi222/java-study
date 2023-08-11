@@ -2,7 +2,7 @@ package prob5;
 
 public class MainApp {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws MyStackException {
 		try {
 			MyStack stack = new MyStack(3);
 			stack.push("Hello");
@@ -24,10 +24,11 @@ public class MainApp {
 			System.out.println(stack.pop());
 			System.out.println(stack.pop());
 			
-		} catch ( MyStackException ex) {
+		} catch ( MyStackException ex) { // stack이 빈 상태인데 pop을 하는 경우, exception 발생시키기 
 			System.out.println( ex );
 		}
 
 	}
 
 }
+
