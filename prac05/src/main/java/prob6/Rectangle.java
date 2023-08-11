@@ -11,5 +11,16 @@ public class Rectangle extends Shape implements Resizable {
 	
 	public void resize(double s) {
 		this.width *= s;
+		this.height *= s;
+	}
+	
+	@Override
+	public String getArea() {
+		return String.valueOf(width * height);
+	}
+
+	@Override
+	public String getPerimeter() {
+		return String.valueOf((width + height) * 2);
 	}
 }
