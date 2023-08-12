@@ -37,6 +37,15 @@ public class LoginMain {
 	
 	public static void login(List<User> users, User user ){
 		/* 코드 작성 */
-		
+		for(User joinUser : users) {
+			if(!joinUser.getId().equals(user.getId())) {
+				throw new UserNotFoundException();
+			} else if(!joinUser.getPassword().equals(user.getPassword())) {
+				throw new PasswordDismatchException();
+			} else {
+				break;
+			}
+			
+		}
 	}
 }
