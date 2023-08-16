@@ -28,10 +28,17 @@ public class CalcApp {
 			Arithmetic arithmetic = null;
 			
 			/* 코드 작성 */
-			
-			
-			int result = arithmetic.calculate(lValue, rValue);
-			System.out.println( ">> " + result );
+			try {
+				if(tokens[ 2 ].equals("+")) arithmetic = new Add();
+				else if(tokens[ 2 ].equals("-")) arithmetic = new Sub();
+				else if(tokens[ 2 ].equals("*")) arithmetic = new Mul();
+				else if(tokens[ 2 ].equals("/")) arithmetic = new Div();
+				
+				int result = arithmetic.calculate(lValue, rValue);
+				System.out.println( ">> " + result );
+			} catch(Exception e) {
+				System.out.println("사칙연산 (+, -, *, /)만 가능합니다.\n");
+			}
 		}
 		
 		scanner.close();
