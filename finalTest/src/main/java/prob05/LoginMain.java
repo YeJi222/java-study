@@ -42,9 +42,7 @@ public class LoginMain {
 				throw new UserNotFoundException();
 			} else if(!joinUser.getPassword().equals(user.getPassword())) {
 				throw new PasswordDismatchException();
-			} else {
-				break;
-			}
+			} 
 			
 		}
 	}
