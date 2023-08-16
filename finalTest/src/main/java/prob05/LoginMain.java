@@ -36,14 +36,16 @@ public class LoginMain {
 	}
 	
 	public static void login(List<User> users, User user ){
-		/* 코드 작성 */
-		for(User joinUser : users) {
-			if(!joinUser.getId().equals(user.getId())) {
-				throw new UserNotFoundException();
-			} else if(!joinUser.getPassword().equals(user.getPassword())) {
-				throw new PasswordDismatchException();
-			} 
-			
+		if(!users.contains(user)) { // 사용자 찾을 수 없으면 
+			throw new UserNotFoundException();
+		} else { // 사용자 찾을 수 있으면 
+			for(int i = 0 ; i < users.size() ; i++) {
+				if(users.get(i).getId().equals(user.getId())) { // 사용자 ID에 올바른 비밀번호 찾기 
+					if(!users.get(i).getPassword().equals(user.getPassword())) {
+						throw new PasswordDismatchException();
+					}
+				}
+			}
 		}
 	}
 }
