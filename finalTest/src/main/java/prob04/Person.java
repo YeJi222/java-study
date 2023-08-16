@@ -9,10 +9,11 @@ public class Person {
 	public Person() { // Constructor 
 		this.name = "";
 		this.age = 12;
+		numberOfPerson = 0;
 	}
 	public Person(String name) { // Constructor 
+		this(); // Person() 생성자 호출 - 반드시 생성자의 첫 줄에 위치 
 		this.name = name;
-		this.age = 12;
 		numberOfPerson += 1;
 	}
 	public Person(int age, String name) { // 오버로딩 
