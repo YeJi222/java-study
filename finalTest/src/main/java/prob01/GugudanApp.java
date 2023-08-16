@@ -2,7 +2,7 @@ package prob01;
 
 import java.util.Scanner;
 
-public class Gugudan {
+public class GugudanApp {
 
 	static int resultNumber = 0;
 
