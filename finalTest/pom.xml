@@ -6,4 +6,8 @@
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <artifactId>finalTest</artifactId>
+  
+  <build>
+  	<finalName>finalTest</finalName>
+  </build>
 </project>
