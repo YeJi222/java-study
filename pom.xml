@@ -13,6 +13,7 @@
   	<module>finalTest</module>
   	<module>prac05</module>
   	<module>chapter04</module>
+  	<module>networkChapter</module>
   </modules>
   
   <properties>
