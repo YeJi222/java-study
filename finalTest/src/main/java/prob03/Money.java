@@ -61,6 +61,8 @@ public class Money {
 		if (obj == null)
 			return false;
 		
+		// System.out.println(obj.getClass().getName());
+		
 		// 인자로 넘어온 Object 객체가 Money 타입인지를 확인
 		if (getClass() == obj.getClass()) {
 			Money other = (Money) obj;
