@@ -12,10 +12,15 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
-public class EchoServer {
-	public static final int PORT = 8000;
+public class EchoRequestHandler extends Thread {
+	private Socket socket;
+	
+	public EchoRequestHandler(Socket socket) {
+		this.socket = socket;
+	}
 
-	public static void main(String[] args) {
+	@Override
+	public void run() {
 		ServerSocket serverSocket = null;
 		
 		try {
@@ -45,8 +50,17 @@ public class EchoServer {
 				pw.flush();
 				
 				while(true) {
-					Socket socket = serverSocket.accept();
-					new EchoRequestHandler(socket).start();
+					String data = br.readLine();
+					if(data == null) {
+						// 클라이언트가 정상적 종료 (close() 호출)
+						log("closed by client");
+						break;
+					}
+					log("received:" + data);
+					pw.println(data);
+					
+					// 6. 데이터 쓰기 
+					os.write(data.getBytes("utf-8"));
 					
 				}
 			} catch (SocketException e) {
@@ -73,10 +87,11 @@ public class EchoServer {
 				e.printStackTrace();
 			}
 		}
+		
+		super.run();
 	}
-
+	
 	private static void log(String message) {
-		System.out.println("[EchoServer] " + message);
+		System.out.println("[EchoServer#" + Thread.currentThread().getId() + "] " + message);
 	}
-
 }
