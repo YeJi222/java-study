@@ -45,7 +45,7 @@ public class RequestHandler extends Thread {
 					break;
 				}
 				
-				log(line);
+//				log(line);
 			}
 			
 			log(request);
@@ -54,6 +54,14 @@ public class RequestHandler extends Thread {
 			InetSocketAddress inetSocketAddress = ( InetSocketAddress )socket.getRemoteSocketAddress();
 			log( "connected from " + inetSocketAddress.getAddress().getHostAddress() + ":" + inetSocketAddress.getPort() );
 
+			String[] tokens = request.split(" ");
+			if("GET".equals(tokens[0])) {
+				responseStaticResouce(outputStream, tokens[1], tokens[2]);
+			} else {
+				// methods: POST, PUT, DELETE, HEAD, CONNECT
+				// SimpleHttpServer에서는 무시(400 Bad Request)
+				responseStaticResouce400Error(outputStream, tokens[2]);
+			}
 
 			// 예제 응답
 			// 서버 시작과 테스트를 마친 후, 주석 처리
@@ -79,6 +87,19 @@ public class RequestHandler extends Thread {
 		super.run();
 	}
 	
+	private void responseStaticResouce400Error(OutputStream outputStream, String string) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	private void responseStaticResouce(
+			OutputStream outputStream, 
+			String url, 
+			String protocolVer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	public void log( String message ) {
 		System.out.println( "[RequestHandler#" + getId() + "] " + message );
 	}
