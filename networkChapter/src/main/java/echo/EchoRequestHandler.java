@@ -21,67 +21,34 @@ public class EchoRequestHandler extends Thread {
 
 	@Override
 	public void run() {
-		ServerSocket serverSocket = null;
+		InetSocketAddress remoteInetSocketAddress = (InetSocketAddress)socket.getRemoteSocketAddress();
+		String remoteHostAddress = remoteInetSocketAddress.getAddress().getHostAddress();
+		int remotePort = remoteInetSocketAddress.getPort();
+		log("connected by client[" + remoteHostAddress + ":" + remotePort + "]");
 		
 		try {
-			serverSocket = new ServerSocket();
+			PrintWriter pw = 
+					new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "utf-8"), true); // auto-flush
+			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "utf-8"));
 			
-			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 10);
-			log("starts...[port:" + PORT + "]");
-			
-			Socket socket = serverSocket.accept();
-			
-			try {
-				InetSocketAddress remoteInetSocketAddress 
-					= (InetSocketAddress) socket.getRemoteSocketAddress();
-				String remoteHostAddress = remoteInetSocketAddress.getAddress().getHostAddress();
-				int remotePort = remoteInetSocketAddress.getPort();
-				log("connected by client[" + remoteHostAddress 
-						+ ":" + remotePort + "]");
-				
-				// 4. IO Stream 받아오기 
-				OutputStream os = socket.getOutputStream();
-				InputStream is = socket.getInputStream();
-				
-				PrintWriter pw = 
-						new PrintWriter(new OutputStreamWriter(os, "utf-8"), true); // auto-flush
-				BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-				pw.print("안녕");
-				pw.flush();
-				
-				while(true) {
-					String data = br.readLine();
-					if(data == null) {
-						// 클라이언트가 정상적 종료 (close() 호출)
-						log("closed by client");
-						break;
-					}
-					log("received:" + data);
-					pw.println(data);
-					
-					// 6. 데이터 쓰기 
-					os.write(data.getBytes("utf-8"));
-					
+			while(true) {
+				String data = br.readLine();
+				if(data == null) {
+					// 클라이언트가 정상적 종료 (close() 호출)
+					log("closed by client");
+					break;
 				}
-			} catch (SocketException e) {
-				System.out.println("");
-			} catch (IOException e) {
-				System.out.println("[server] error:" + e);
-			} finally {
-				try {
-					if(serverSocket != null && !serverSocket.isClosed()) {
-						serverSocket.close();
-					}
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
+				log("received:" + data);
+				pw.println(data);				
 			}
+		} catch (SocketException e) {
+			log("suddenly closed by client");
 		} catch (IOException e) {
 			log("error:" + e);
 		} finally {
 			try {
-				if(serverSocket != null && !serverSocket.isClosed()) {
-					serverSocket.close();
+				if(socket != null && !socket.isClosed()) {
+					socket.close();
 				}
 			} catch(IOException e) {
 				e.printStackTrace();

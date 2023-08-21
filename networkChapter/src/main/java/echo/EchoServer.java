@@ -24,43 +24,10 @@ public class EchoServer {
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 10);
 			log("starts...[port:" + PORT + "]");
 			
-			Socket socket = serverSocket.accept();
-			
-			try {
-				InetSocketAddress remoteInetSocketAddress 
-					= (InetSocketAddress) socket.getRemoteSocketAddress();
-				String remoteHostAddress = remoteInetSocketAddress.getAddress().getHostAddress();
-				int remotePort = remoteInetSocketAddress.getPort();
-				log("connected by client[" + remoteHostAddress 
-						+ ":" + remotePort + "]");
+			while(true) {
+				Socket socket = serverSocket.accept();
+				new EchoRequestHandler(socket).start();
 				
-				// 4. IO Stream 받아오기 
-				OutputStream os = socket.getOutputStream();
-				InputStream is = socket.getInputStream();
-				
-				PrintWriter pw = 
-						new PrintWriter(new OutputStreamWriter(os, "utf-8"), true); // auto-flush
-				BufferedReader br = new BufferedReader(new InputStreamReader(is, "utf-8"));
-				pw.print("안녕");
-				pw.flush();
-				
-				while(true) {
-					Socket socket = serverSocket.accept();
-					new EchoRequestHandler(socket).start();
-					
-				}
-			} catch (SocketException e) {
-				System.out.println("");
-			} catch (IOException e) {
-				System.out.println("[server] error:" + e);
-			} finally {
-				try {
-					if(serverSocket != null && !serverSocket.isClosed()) {
-						serverSocket.close();
-					}
-				} catch(IOException e) {
-					e.printStackTrace();
-				}
 			}
 		} catch (IOException e) {
 			log("error:" + e);
@@ -76,7 +43,7 @@ public class EchoServer {
 	}
 
 	private static void log(String message) {
-		System.out.println("[EchoServer] " + message);
+		System.out.println("[EchoServer] " + Thread.currentThread().getId() + "]" + message);
 	}
 
 }
