@@ -18,7 +18,7 @@ public class ChatServerThread extends Thread {
 	// 스레드에 List 객체를 참조하는 변수 추가  
 	private List<PrintWriter> listWriters; 
 
-	public ChatServerThread(Socket socket, List<PrintWriter> listWriters) {
+	public ChatServerThread(Socket socket, List<PrintWriter> listWriters) { // 생성자 
 		this.socket = socket;
 		this.listWriters = listWriters;
 	}
@@ -42,10 +42,10 @@ public class ChatServerThread extends Thread {
 			
 			// 요청 처리 
 			while(true) {
-				String request = br.readLine();
+				String request = br.readLine(); // 클라이언트로부터 데이터 수신 
 				// System.out.println("request: " + request); // test
 				
-				if(request == null) { // 클라이언트에서 종료 
+				if(request == null) { // 클라이언트에서 종료하면 수신받지 못함 
 					ChatServer.log("클라이언트로 부터 연결 끊김");
 					doQuit(pw);
 					break;
@@ -57,6 +57,9 @@ public class ChatServerThread extends Thread {
 				// 요청은 ':'을 기준으로 요청명령과 파라미터로 분리 
 				String[] tokens = request.split(":");
 				
+				// tokens[0] : 요청명령 ex. join, message, quit
+				// tokens[1] : 내용(파라미터)
+				// pw :PrintWriter 변수 
 				if("join".equals(tokens[0])) {
 					doJoin(tokens[1], pw);
 				} else if("message".equals(tokens[0])) {
@@ -69,10 +72,10 @@ public class ChatServerThread extends Thread {
 			}
 			
 		} catch (SocketException e) {
-			doQuit(pw);
+			doQuit(pw); // 에러나면 doQuit 실행해서 종료된 클라이언트의 PrintWriter 변수 리스트에서 remove 
 			ChatServer.log("abnormal closed by client");
 		} catch (IOException e) {
-			doQuit(pw);
+			doQuit(pw); // 에러나면 doQuit 실행해서 종료된 클라이언트의 PrintWriter 변수 리스트에서 remove 
 			ChatServer.log("error: " + e);
 		} finally {
 			// 자원 정리 
@@ -91,9 +94,9 @@ public class ChatServerThread extends Thread {
 		this.nickname = nickName;
 		
 		String data = "'" + nickName + "'님이 참여하였습니다.";
-		broadcast(data);
+		broadcast(data); // 서버에 연결된 모든 클라이언트에 메시지를 보내는 (브로드캐스트) 메소드 
 		
-		/* writer pool에 저장 */
+		/* writer pool(PrintWriter 리스트)에 저장 */
 		addWriter(writer);
 		
 		// ack를 보내 방 참여가 성공했다는 것을 클라이언트에게 알려주기 
@@ -102,7 +105,7 @@ public class ChatServerThread extends Thread {
 
 	private void addWriter(PrintWriter writer) {
 		// synchronized : 여러 스레드가 하나의 공유 객체에 접근할 때, 동기화를 보장 
-		// 동기 : 요청을 보냈을 때, 응답이 돌아와야 다음 동작 수행 가능 
+		// 동기 : 요청을 보냈을 때, 응답이 돌아와야 다음 동작 수행 가능(순차적 수행) 
 		synchronized(listWriters) {
 			listWriters.add(writer);
 		}
@@ -113,7 +116,7 @@ public class ChatServerThread extends Thread {
 		// 스레드간 공유 객체인 listWriters에 접근하기 때문에 동기화 처리 필요 
 		synchronized(listWriters) {
 			for(PrintWriter writer : listWriters) {
-				writer.println(data);
+				writer.println(data); // 클라이언트에 data 보내주기 
 			}
 		}
 	}
@@ -123,7 +126,7 @@ public class ChatServerThread extends Thread {
 	}
 
 	private void doQuit(PrintWriter writer) {
-		removeWriter(writer);
+		removeWriter(writer); // 리스트에서 pw 변수 remove 
 		
 		if(nickname != null) {
 			String data = "'" + nickname + "'님이 퇴장 하였습니다.";
@@ -133,7 +136,7 @@ public class ChatServerThread extends Thread {
 
 	private void removeWriter(PrintWriter writer) {
 		synchronized(listWriters) {
-			listWriters.remove(writer);
+			listWriters.remove(writer); // 리스트에서 pw 변수 remove 
 		}
 	}
 }

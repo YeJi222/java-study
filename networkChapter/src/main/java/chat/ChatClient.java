@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class ChatClient {
 	// private static final String SERVER_IP = "127.0.0.1";
-	private static final String SERVER_IP = "0.0.0.0";
+	private static final String SERVER_IP = "0.0.0.0"; // 모든 ip 연결 가능 
 	
 	public static void main(String[] args) {
 		Scanner scanner = null;
@@ -35,19 +35,20 @@ public class ChatClient {
 			// 5. join 프로토콜 
 			System.out.print("닉네임>> ");
 			String nickname = scanner.nextLine();
-			pw.println("join:" + nickname); // 서버에 보내줌 
+			pw.println("join:" + nickname); // 서버에 내용 보내줌 
 			
-			String ack = br.readLine();
-			if("join:ok".equals(ack)) {
+			String ack = br.readLine(); // 서버로부터 받은 내용 수신 
+			if("join:ok".equals(ack)) { // 서버에서 join:ok 메시지를 받으면 아래 내용 콘솔로 찍어주기 
 				System.out.println("'" + nickname + "'님이 입장하였습니다. 즐거운 채팅 되세요");
 			}
 			
 			// 6. ChatClientReceivedThread 시작 
-			new ChatClientThread(socket).start();
+			// 클라이언트마다 socket Thread 실행시켜 다중 채팅 가능하도록 
+			new ChatClientThread(socket).start(); 
 			
 			// 7. 키보드 입력 처리 
 			while(true) {
-				if(!scanner.hasNextLine()) { // 읽을 값이 없으면(그냥 엔터쳤을 때)
+				if(!scanner.hasNextLine()) { // 읽을 값이 없으면(그냥 실수로 엔터쳤을 때)
 					continue;
 				}
 				
@@ -56,10 +57,12 @@ public class ChatClient {
 				
 				if("quit".equals(input)) {
 					// 8. quit 프로토콜 처리 
-					pw.println("QUIT");
+					pw.println("quit"); // 클라이언트에게 quit 데이터 전송(서버는 이걸 받아서 doQuit 메소드 실행)
 					break;
 				} else {
 					// 9. 메시지 처리 
+					// quit이 아닌 다른 메시지가 입력되었을 때, 채팅 메시지로 인식하고 서버에 메시지 내용 보내줌 
+					// 서버는 이 메시지를 받아서 doMessage 메소드 실행 
 					pw.println("message:" + input);
 				}
 			}

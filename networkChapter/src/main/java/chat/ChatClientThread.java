@@ -21,12 +21,12 @@ public class ChatClientThread extends Thread {
 			br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			
 			while(true) {
-				String message = br.readLine();
-				if(message == null) {
+				String message = br.readLine(); // 서버로부터 데이터 수신 
+				if(message == null) { // 서버로부터 데이터를 받지 못하면 break 
 					break;
 				}
 				
-				System.out.println(message);
+				System.out.println(message); // 서버로 부터 받은 데이터를 터미널 콘솔로 찍어주기 
 			}
 		} catch (SocketException e) {
 			ChatClient.log("error: " + e);
