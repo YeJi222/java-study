@@ -13,11 +13,11 @@ public class ChatClientApp {
 			System.out.print("> ");
 			name = scanner.nextLine();
 			
-			System.out.println(name.isEmpty());
-			if (name.isEmpty() == false ) { // 그냥 엔터 쳤을 때, 빈 대화명 안되게 
+			if (name.isEmpty() == false ) { // 빈 대화명이 아닐 때 
 				break;
 			}
 			
+			// 그냥 엔터 쳤을 때, 빈 대화명일 때 
 			System.out.println("대화명은 한글자 이상 입력해야 합니다.\n");
 		}
 		
