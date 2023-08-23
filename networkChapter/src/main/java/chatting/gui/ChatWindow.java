@@ -1,7 +1,8 @@
-package chat.gui;
+package chatting.gui;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Frame;
 import java.awt.Panel;
 import java.awt.TextArea;
@@ -20,19 +21,23 @@ public class ChatWindow {
 	private Button buttonSend;
 	private TextField textField;
 	private TextArea textArea;
+	
+	private String nickname;
 
-	public ChatWindow(String name) {
+	public ChatWindow(String name, String nickname) {
+		this.nickname = nickname;
+		
 		frame = new Frame(name);
 		pannel = new Panel();
 		buttonSend = new Button("Send");
 		textField = new TextField();
-		textArea = new TextArea(30, 80);
+		textArea = new TextArea(30, 30);
 	}
 
 	public void show() { // 윈도우에 붙이기 
 		// Button
 		buttonSend.setBackground(Color.GRAY);
-		buttonSend.setForeground(Color.WHITE);
+		buttonSend.setForeground(Color.BLACK);
 		buttonSend.addActionListener( new ActionListener() {
 			@Override
 			public void actionPerformed( ActionEvent e ) {
@@ -48,7 +53,7 @@ public class ChatWindow {
 		*/
 
 		// Textfield
-		textField.setColumns(80); // 수평으로 
+		textField.setColumns(50); // 수평으로 
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -65,11 +70,13 @@ public class ChatWindow {
 		pannel.add(buttonSend);
 		frame.add(BorderLayout.SOUTH, pannel); // 밑으로 붙이기
 
-		// TextArea
+		// TextArea 
 		textArea.setEditable(false);
 		frame.add(BorderLayout.CENTER, textArea);
 
 		// Frame
+		Dimension dim = new Dimension(500, 700);
+		frame.setPreferredSize(dim);
 		frame.addWindowListener(new WindowAdapter() {
 			public void windowClosing(WindowEvent e) { // 윈도우가 닫혔을 때 
 				finish();
@@ -92,13 +99,13 @@ public class ChatWindow {
 	
 	private void sendMessage() {
 		String message = textField.getText();
-		System.out.println("메시지를 보내는 프로토콜 구현: " + message);
+		System.out.println("메시지: " + message);
 		
 		textField.setText(""); // 버튼 누르고 내용 지우기 
 		textField.requestFocus(); // 버튼을 누를 때, TextField에 포커싱 
 		
 		// ChatClientThread에서 서버로부터 받은 메시지가 있다고 치고 
-		updateTextArea("마이콜: " + message);
+		updateTextArea(nickname + ": " + message);
 	}
 	
 	private void updateTextArea(String message) {
