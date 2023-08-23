@@ -2,7 +2,9 @@ package chatGUI;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Frame;
+import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
@@ -21,6 +23,7 @@ import java.net.ConnectException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class ChatWindow {
@@ -45,7 +48,7 @@ public class ChatWindow {
 		pannel = new Panel();
 		buttonSend = new Button("Send");
 		textField = new TextField();
-		textArea = new TextArea(30, 80);
+		textArea = new TextArea(40, 50);
 	}
 
 	public void show() { // 윈도우에 붙이기 
@@ -61,7 +64,7 @@ public class ChatWindow {
 		});
 
 		// Textfield
-		textField.setColumns(80); // 수평으로 
+		textField.setColumns(50); // 수평으로 
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -79,7 +82,7 @@ public class ChatWindow {
 		frame.add(BorderLayout.SOUTH, pannel); // 밑으로 붙이기
 
 		// TextArea
-		textArea.setEditable(false);
+		textArea.setEditable(false); // textarea 편집 불가능 
 		frame.add(BorderLayout.CENTER, textArea);
 
 		// Frame
@@ -123,29 +126,36 @@ public class ChatWindow {
 	
 	private void sendMessage() {
 		String message = textField.getText();
-		pw.println("message:" + message);
-		System.out.println("메시지 내용 : " + message);
-		
-		textField.setText(""); // 버튼 누르고 내용 지우기 
-		textField.requestFocus(); // 버튼을 누를 때, TextField에 포커싱 
-		
-		// updateTextArea(name + ": " + message);
+		if(message != null) {
+			pw.println("message:" + message);
+			System.out.println("메시지 내용 : " + message);
+			
+			textField.setText(""); // 버튼 누르고 내용 지우기 
+			textField.requestFocus(); // 버튼을 누를 때, TextField에 포커싱 
+		}
 	}
 	
-	private void updateTextArea(String message) {
-		System.out.println("In updateTextArea : " + message);
-		String[] tokens = message.split(":");
-		
-		String nickname = tokens[0];
-		String content = tokens[1];
-		if(nickname.equals(name)) {
-			message = "[나] " + content;
+	private void updateTextArea(String message) {		
+		if(message.contains(":")) { // 채팅 메시지인 경우 
+			String[] tokens = message.split(":");
+			
+			String nickname = tokens[0];
+			String content = tokens[1];
+			
+			if(nickname.equals(name)) {
+				message = "[나] " + content;
+				
+				message = "\t\t   " + message;
+			} else {
+				message = "[" + nickname + "] " + content;
+			}
+			
+			textArea.append(message);
+			textArea.append("\n");
 		} else {
-			message = "[" + nickname + "] " + content;
+			textArea.append(message);
+			textArea.append("\n\n");
 		}
-		
-		textArea.append(message);
-		textArea.append("\n");
 	}
 	
 //	private void updateAlert(String message) {
@@ -163,13 +173,12 @@ public class ChatWindow {
 				try {
 					while(true) {
 						String message = br.readLine(); // 서버로부터 데이터 수신 
-						System.out.println("message from server : " + message);
 						if(message == null) { // 서버로부터 데이터를 받지 못하면 break 
 							break;
 						}
 						
 						Thread.sleep(1); // 메시지 delay 출력 막기 위해 
-						System.out.println("message - " + message); // 서버로 부터 받은 데이터를 터미널 콘솔로 찍어주기 
+						// System.out.println("message - " + message); // 서버로 부터 받은 데이터를 터미널 콘솔로 찍어주기 
 						updateTextArea(message);
 					}
 				} catch (InterruptedException e) { // sleep 관련 exception 

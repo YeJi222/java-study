@@ -12,7 +12,7 @@ import java.util.Scanner;
 import chatting.gui.ChatServer;
 
 public class ChatClientApp {
-	public static final String SERVER_IP = "0.0.0.0"; // 모든 ip 연결 가능 
+	public static final String SERVER_IP = "127.0.0.1"; // 모든 ip 연결 가능 
 	public static final int PORT = 9998;
 
 	public static void main(String[] args) {
@@ -41,12 +41,11 @@ public class ChatClientApp {
 			// 1. create socket 
 			socket = new Socket();
 			
-			// 1-3. SO_NODELAY(Nagle Algorithm off) - Nagle 알고리즘을 적용하지 않는 옵션 
-			// socket.setTcpNoDelay(true); 
-			
 			// 1-2. connect server
 			socket.connect(new InetSocketAddress(SERVER_IP, PORT));
 			
+			System.out.println("Test!! nickname : " + name);
+
 			// 2. reader/writer 생성 
 			BufferedReader br = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 			PrintWriter pw = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8"), true); // auto-flush
@@ -55,7 +54,7 @@ public class ChatClientApp {
 			pw.println("join:" + name); // 서버에 내용 보내줌 
 			
 			String ack = br.readLine(); // 서버로부터 받은 내용 수신 
-			System.out.println("ack: " + ack);
+			// System.out.println("ack: " + ack);
 			if("join:ok".equals(ack)) { // 서버에서 join:ok 메시지를 받으면 아래 내용 콘솔로 찍어주기 
 				new ChatWindow(name, socket).show();
 			}

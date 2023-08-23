@@ -32,13 +32,12 @@ public class ChatServer {
 			// System.out.println(hostAddress); // test
 			
 			// hostAddress = "0.0.0.0"; // 모든 ip 주소 받기 가능 
-			// bind 메소드에서 인자 '10' 의미 -> addrlen : 주소 정보를 담은 변수의 길이 
+			// bind 메소드에서 인자 '50' 의미 -> 큐 
 			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 10); 
 			log("연결 기다림 [" + hostAddress + ":" + PORT + "]");
 			
 			// 3. 요청 대기 
 			while(true) {
-				// System.out.println("test");
 				Socket socket = serverSocket.accept(); // 클라이언트의 연결 요청 대기 
 				// Server Thread 실행 - 클라이언트가 연결 될 때마다 서버 Thread 생성 및 실행
 				// 동시 작업(다중 채팅)이 가능하도록 Thread 실행한다 

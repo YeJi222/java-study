@@ -45,7 +45,6 @@ public class ChatServerThread extends Thread {
 			// 요청 처리 
 			while(true) {
 				String request = br.readLine(); // 클라이언트로부터 데이터 수신 
-				System.out.println("request - " + request); // test
 				
 				if(request == null) { // 클라이언트에서 종료하면 수신받지 못함 
 					ChatServer.log("클라이언트로 부터 연결 끊김");
