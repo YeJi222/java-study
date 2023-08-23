@@ -33,7 +33,7 @@ public class ChatServer {
 			
 			// hostAddress = "0.0.0.0"; // 모든 ip 주소 받기 가능 
 			// bind 메소드에서 인자 '50' 의미 -> 큐 
-			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 10); 
+			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 50); 
 			log("연결 기다림 [" + hostAddress + ":" + PORT + "]");
 			
 			// 3. 요청 대기 

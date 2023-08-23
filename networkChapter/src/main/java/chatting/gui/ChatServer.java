@@ -32,7 +32,7 @@ public class ChatServer {
 			
 			hostAddress = "0.0.0.0"; // 모든 ip 주소 받기 가능 
 			// bind 메소드에서 인자 '10' 의미 -> addrlen : 주소 정보를 담은 변수의 길이 
-			serverSocket.bind(new InetSocketAddress(hostAddress, PORT), 10); 
+			serverSocket.bind(new InetSocketAddress(hostAddress, PORT), 50); 
 			log("연결 기다림 " + hostAddress + ":" + PORT);
 			
 			// 3. 요청 대기 
