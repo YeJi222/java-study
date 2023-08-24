@@ -1,4 +1,4 @@
-package chatGUI;
+package chatGUIclient;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,11 +9,9 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-import chatting.gui.ChatServer;
-
 public class ChatClientApp {
 	public static final String SERVER_IP = "192.168.0.129"; // 모든 ip 연결 가능 
-	public static final int PORT = 9998;
+	public static final int PORT = 9999;
 
 	public static void main(String[] args) {
 		String name = null;
@@ -59,7 +57,7 @@ public class ChatClientApp {
 				new ChatWindow(name, socket).show();
 			}
 		} catch (ConnectException e) {
-			log("서버[" + SERVER_IP + ":" + ChatServer.PORT + "]에 연결할 수 없습니다.");
+			log("서버[" + SERVER_IP + ":" + PORT + "]에 연결할 수 없습니다.");
 		} catch (Exception e) {
 			log("error: " + e);
 		} finally {
