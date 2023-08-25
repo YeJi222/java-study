@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ChatServer {
 
-	public static final int PORT = 9999;
+	public static final int PORT = 9998;
 
 	public static void main(String[] args) {
 		// PrintWriter를 담을 수 있는 List 생성 - 공유 객체 
