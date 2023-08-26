@@ -119,12 +119,16 @@ public class ChatWindow {
 	
 	private void sendMessage() {
 		String message = textField.getText();
-		if(message != null) {
-			pw.println("message:" + message);
-			System.out.println("메시지 내용 : " + message);
-			
-			textField.setText(""); // 버튼 누르고 내용 지우기 
-			textField.requestFocus(); // 버튼을 누를 때, TextField에 포커싱 
+		if(message.isBlank()) { // 빈 메시지 send 
+			System.out.println("메시지 입력 후, send 버튼 누르세요.");
+			pw.println("blank");
+		} else {
+			if(message != null) {
+				pw.println("message:" + message);
+				
+				textField.setText(""); // 버튼 누르고 내용 지우기 
+				textField.requestFocus(); // 버튼을 누를 때, TextField에 포커싱 
+			}
 		}
 	}
 	
@@ -164,9 +168,23 @@ public class ChatWindow {
 						if(data == null) { // 서버로부터 데이터를 받지 못하면 break 
 							break;
 						}
-						
 						Thread.sleep(1); // 메시지 delay 출력 막기 위해 
 						updateTextArea(data);
+						
+						String nickname = "";
+						if(data.contains(":")) { // 채팅 메시지인 경우 
+							String[] tokens = data.split(":");
+							
+							nickname = tokens[0];
+							String content = tokens[1];
+							
+							if(!nickname.equals(name)) { // 다른 사람 채팅 내용 
+								data = "[" + nickname + "]: " + content; 
+							} else { // 보내는 메시지 
+								data = "보내는 메시지 내용: " + content; 
+							}
+						}
+						System.out.println(data); // 서버로 부터 받은 데이터를 터미널 콘솔로 찍어주기
 					}
 				} catch (InterruptedException e) { // Thread sleep 관련 exception 
 					ChatClientApp.log("error: " + e);

@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.Arrays;
 import java.util.List;
 
 public class ChatServerThread extends Thread {
@@ -65,6 +66,8 @@ public class ChatServerThread extends Thread {
 					doMessage(tokens[1]);
 				} else if("quit".equals(tokens[0])) {
 					doQuit(pw);
+				} else if("blank".equals(tokens[0])) {
+					continue;
 				} else {
 					ChatServer.log("요청명령 에러: (" + tokens[0] + ")");
 				}
