@@ -6,12 +6,13 @@ import java.net.InetAddress; // ip주소를 다루기 위한 클래스
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatServer {
 
-	public static final int PORT = 9999;
+	public static final int PORT = 9998;
 
 	public static void main(String[] args) {
 		// PrintWriter를 담을 수 있는 List 생성 - 공유 객체 
@@ -30,10 +31,10 @@ public class ChatServer {
 			String hostAddress = InetAddress.getLocalHost().getHostAddress(); // 로컬호스트 ip주소 반환
 			// System.out.println(hostAddress); // test
 			
-			hostAddress = "0.0.0.0"; // 모든 ip 주소 받기 가능 
-			// bind 메소드에서 인자 '10' 의미 -> addrlen : 주소 정보를 담은 변수의 길이 
-			serverSocket.bind(new InetSocketAddress(hostAddress, PORT), 10); 
-			log("연결 기다림 " + hostAddress + ":" + PORT);
+			// hostAddress = "0.0.0.0"; // 모든 ip 주소 받기 가능 
+			// bind 메소드에서 인자 '50' 의미 -> 큐 
+			serverSocket.bind(new InetSocketAddress("0.0.0.0", PORT), 50); 
+			log("연결 기다림 [" + hostAddress + ":" + PORT + "]");
 			
 			// 3. 요청 대기 
 			while(true) {
@@ -42,6 +43,8 @@ public class ChatServer {
 				// 동시 작업(다중 채팅)이 가능하도록 Thread 실행한다 
 				new ChatServerThread(socket, listWriters).start(); 
 			}
+		} catch (SocketException e) {
+			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {

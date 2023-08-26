@@ -1,4 +1,4 @@
-package chatGUI;
+package chat;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -9,7 +9,7 @@ import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.util.Scanner;
 
-import chatting.gui.ChatServer;
+import chat.ChatServer;
 
 public class ChatClientApp {
 	public static final String SERVER_IP = "192.168.0.129"; // 모든 ip 연결 가능 
