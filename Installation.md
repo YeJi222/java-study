@@ -3,7 +3,7 @@
 <img width="846" alt="image" src="https://github.com/YeJi222/java-study/assets/70511859/a1d3ab53-1fb1-457f-9523-a22916acd71e">
 
 - ARM64 DMG Installer dmg 버전으로 다운   
-https://download.oracle.com/java/17/latest/jdk-17_macos-aarch64_bin.dmg
+https://download.oracle.com/java/17/latest/jdk-17_macos-aarch64_bin.dmg (즉시 다운)
 - dmg 설치 후, 아래 경로에 저장된다
 ```sh
 /Library/Java/JavaVirtualMachines/jdk-17.jdk/Contents/Home
@@ -33,7 +33,7 @@ https://download.oracle.com/java/17/latest/jdk-17_macos-aarch64_bin.dmg
 <img width="487" alt="image" src="https://github.com/YeJi222/java-study/assets/70511859/8ffc0d4c-a800-412c-a504-6a04c538378b">
 
 - zip으로 다운   
-https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.zip   
+https://dlcdn.apache.org/tomcat/tomcat-9/v9.0.80/bin/apache-tomcat-9.0.80.zip (즉시 다운)  
 - poscodx 폴더에 압축 풀기
 <img width="404" alt="image" src="https://github.com/YeJi222/java-study/assets/70511859/48f09089-3a4c-4db3-9555-36aecfe28152">
 
