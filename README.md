@@ -1,5 +1,3 @@
-# 'java-study' README.md
-
 ## Assignment01 - Chatting Program(java-study/HW1에 위치)
 ### 실행방법
 ```sh
