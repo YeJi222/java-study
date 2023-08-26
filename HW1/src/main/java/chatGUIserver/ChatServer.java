@@ -1,4 +1,4 @@
-package chat;
+package chatGUIserver;
 
 import java.io.IOException;
 import java.io.PrintWriter;

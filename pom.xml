@@ -16,6 +16,7 @@
   	<module>networkChapter</module>
   	<module>assignment01</module>
   	<module>chatClientTest</module>
+  	<module>HW1</module>
   </modules>
   
   <properties>

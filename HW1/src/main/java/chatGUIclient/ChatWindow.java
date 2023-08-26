@@ -1,10 +1,8 @@
-package chat;
+package chatGUIclient;
 import java.awt.BorderLayout;
 import java.awt.Button;
 import java.awt.Color;
-import java.awt.Font;
 import java.awt.Frame;
-import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
@@ -19,12 +17,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.net.ConnectException;
-import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
-import java.util.Arrays;
-import java.util.Scanner;
 
 public class ChatWindow {
 
@@ -54,7 +48,6 @@ public class ChatWindow {
 	public void show() { // 윈도우에 붙이기 
 		// Button
 		buttonSend.setBackground(Color.GRAY);
-//		buttonSend.setForeground(Color.WHITE);
 		buttonSend.setForeground(Color.BLACK);
 		buttonSend.addActionListener( new ActionListener() {
 			@Override
@@ -64,7 +57,7 @@ public class ChatWindow {
 		});
 
 		// Textfield
-		textField.setColumns(50); // 수평으로 
+		textField.setColumns(50);
 		textField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -142,26 +135,21 @@ public class ChatWindow {
 			String nickname = tokens[0];
 			String content = tokens[1];
 			
-			if(nickname.equals(name)) {
-				message = "[나] " + content;
-				
+			// 상대방 메시지와 본인 메시지 위치 달리 해주기 위해 
+			if(nickname.equals(name)) { // 본인 메시지 center 위치 
+				message = "[나] " + content; 
 				message = "\t\t   " + message;
-			} else {
+			} else { // 상대방 메시지 left 위치 
 				message = "[" + nickname + "] " + content;
 			}
 			
 			textArea.append(message);
 			textArea.append("\n");
-		} else {
+		} else { // 채팅 메시지가 아닌 알림 메시지인 경우 
 			textArea.append(message);
 			textArea.append("\n\n");
 		}
 	}
-	
-//	private void updateAlert(String message) {
-//		textArea.append(message);
-//		textArea.append("\n");
-//	}
 	
 	// ChatClientThread.java 분리시키지 않고 private class로 ChatWindow 클래스 내에 선언 
 	// socket을 해당 class내에 선언했으므로, 파라미터로 넘겨주지 않아도 ok 
@@ -172,21 +160,20 @@ public class ChatWindow {
 			while(true) {
 				try {
 					while(true) {
-						String message = br.readLine(); // 서버로부터 데이터 수신 
-						if(message == null) { // 서버로부터 데이터를 받지 못하면 break 
+						String data = br.readLine(); // 서버로부터 데이터 수신 
+						if(data == null) { // 서버로부터 데이터를 받지 못하면 break 
 							break;
 						}
 						
 						Thread.sleep(1); // 메시지 delay 출력 막기 위해 
-						// System.out.println("message - " + message); // 서버로 부터 받은 데이터를 터미널 콘솔로 찍어주기 
-						updateTextArea(message);
+						updateTextArea(data);
 					}
-				} catch (InterruptedException e) { // sleep 관련 exception 
+				} catch (InterruptedException e) { // Thread sleep 관련 exception 
 					ChatClientApp.log("error: " + e);
 				} catch (SocketException e) {
 					ChatClientApp.log("error: " + e);
 				} catch (IOException e) {
-					ChatClientApp.log("다음 이유로 프로그램을 종료합니다 : " + e);
+					ChatClientApp.log("error: " + e);
 				} finally {
 					finish(); // 시스템 종료 
 				}

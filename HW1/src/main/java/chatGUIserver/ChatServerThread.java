@@ -28,8 +28,6 @@ public class ChatServerThread extends Thread {
 		BufferedReader br = null;
 		PrintWriter pw = null;
 		
-		// System.out.println("test");
-		
 		try {
 			// 1. Remote Host Information(연결된 클라이언트의 IP와 포트 정보 얻기) 
 			// log : Connected by client[클라이언트 IP:클라이언트 포트번호]
@@ -68,13 +66,13 @@ public class ChatServerThread extends Thread {
 				} else if("quit".equals(tokens[0])) {
 					doQuit(pw);
 				} else {
-					ChatServer.log("에러: 알 수 없는 요청(" + tokens[0] + ")");
+					ChatServer.log("요청명령 에러: (" + tokens[0] + ")");
 				}
 			}
 			
 		} catch (SocketException e) {
 			doQuit(pw); // 에러나면 doQuit 실행해서 종료된 클라이언트의 PrintWriter 변수 리스트에서 remove 
-			ChatServer.log("abnormal closed by client");
+			ChatServer.log("error: " + e);
 		} catch (IOException e) {
 			doQuit(pw); // 에러나면 doQuit 실행해서 종료된 클라이언트의 PrintWriter 변수 리스트에서 remove 
 			ChatServer.log("error: " + e);
