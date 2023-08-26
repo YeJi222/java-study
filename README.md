@@ -66,6 +66,9 @@ $ java chatGUIclient.ChatClientApp
 (user3)   
 <img width="483" alt="image" src="https://github.com/YeJi222/java-study/assets/70511859/f6423715-7da3-49e1-8676-0f0f9b660d1f">   
 
+#### [+ 한글 출력]
+- 한글 출력도 잘 되는 것을 확인할 수 있다 
+<img width="1007" alt="image" src="https://github.com/YeJi222/java-study/assets/70511859/a9581466-1b77-42ff-8848-81c6d0ed9a0c">
 
 
 
