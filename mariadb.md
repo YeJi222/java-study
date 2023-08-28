@@ -16,3 +16,18 @@ sudo systemctl restart mariadb
 ```
 - 변경 후
 <img width="374" alt="image" src="https://github.com/YeJi222/java-study/assets/70511859/3cf0f16e-ebef-4470-b028-0a31fc389b33">
+
+### [mariadb 실행/중지]
+- mariadb 실행
+```sh
+systemctl start mariadb
+```
+- mariadb 중지
+```sh
+systemctl stop mariadb
+```
+- ubuntu 재시작시, mysql 자동으로 시작할 수 있도록 service를 등록
+```sh
+sudo systemctl enable mysql
+```
+
