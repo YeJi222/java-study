@@ -30,4 +30,7 @@ systemctl stop mariadb
 ```sh
 sudo systemctl enable mysql
 ```
-
+- mariadb 실행/중지 잘 되는지 확인
+```sh
+sudo lsof -PiTCP -sTCP:LISTEN
+```
